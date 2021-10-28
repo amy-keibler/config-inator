@@ -1,5 +1,6 @@
 [workspace]
 
 members = [
-  "configurator-rs"
+  "configurator-rs",
+  "configurator-java",
 ]
