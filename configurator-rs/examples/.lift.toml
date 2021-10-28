@@ -1,0 +1,3 @@
+setup = "echo 'Hello, Lift'"
+allow = ["amy"]
+summaryComments = true
