@@ -21,6 +21,9 @@ repositories {
     mavenCentral()
 }
 
+sourceCompatibility = '1.11'
+targetCompatibility = '1.11'
+
 dependencies {
     // Use the latest Groovy version for Spock testing
     testImplementation 'org.codehaus.groovy:groovy:3.0.8'
