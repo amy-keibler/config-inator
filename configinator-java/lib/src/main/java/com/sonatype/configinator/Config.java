@@ -1,5 +1,8 @@
 package com.sonatype.configinator;
 
+import com.sonatype.configinator.exceptions.ConfigurationFailedToLoadException;
+import com.sonatype.configinator.exceptions.ConfigurationUsedAfterCleanupException;
+
 import java.io.File;
 import java.nio.file.Path;
 
@@ -23,7 +26,7 @@ public class Config implements AutoCloseable {
         var config = new Config();
         config.configPointer = loadConfig(filePath.toString());
         if (0 == config.configPointer) {
-            throw new RuntimeException("Could not load configuration at " + filePath);
+            throw new ConfigurationFailedToLoadException(filePath);
         }
         return config;
     }
@@ -35,7 +38,7 @@ public class Config implements AutoCloseable {
 
     private void assertConfigLoaded() {
         if (0 == configPointer) {
-            throw new RuntimeException("Attempted to use a configuration after it was cleaned up");
+            throw new ConfigurationUsedAfterCleanupException();
         }
     }
 

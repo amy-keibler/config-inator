@@ -1,5 +1,7 @@
 package com.sonatype.configinator
 
+import com.sonatype.configinator.exceptions.ConfigurationUsedAfterCleanupException
+import com.sonatype.configinator.exceptions.JNIException
 import spock.lang.Specification
 
 import java.nio.file.Path
@@ -28,7 +30,19 @@ class ConfigSpec extends Specification {
         subject.getSetup()
 
         then: 'the config is available'
-        def e = thrown(RuntimeException)
+        def e = thrown(ConfigurationUsedAfterCleanupException)
         e.message == 'Attempted to use a configuration after it was cleaned up'
+    }
+
+    def 'it should handle exceptions thrown from the Rust code'() {
+        given: 'a path to invalid configuration'
+        def path = Path.of('src/test/resources/examples/.lift.json')
+
+        when: 'the file is loaded'
+        Config.loadFromFile(path)
+
+        then: 'an exception is thrown'
+        def e = thrown(JNIException)
+        e.message == 'Failed to parse file as a toml file'
     }
 }
