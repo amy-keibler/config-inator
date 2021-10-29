@@ -1,4 +1,4 @@
-package com.sonatype.configurator
+package com.sonatype.configinator
 
 import spock.lang.Specification
 

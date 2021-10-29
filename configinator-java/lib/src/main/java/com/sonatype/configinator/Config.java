@@ -1,4 +1,4 @@
-package com.sonatype.configurator;
+package com.sonatype.configinator;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -10,7 +10,7 @@ public class Config implements AutoCloseable {
     private static native void unloadConfig(long configPointer);
 
     static {
-        System.loadLibrary("configurator_java");
+        System.loadLibrary("configinator_jni");
     }
 
     private long configPointer;

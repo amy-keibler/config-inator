@@ -31,21 +31,21 @@ dependencies = [
 ]
 
 [[package]]
-name = "configurator-java"
-version = "0.1.0"
-dependencies = [
- "configurator-rs",
- "jni",
-]
-
-[[package]]
-name = "configurator-rs"
+name = "configinator"
 version = "0.1.0"
 dependencies = [
  "itertools",
  "serde",
  "thiserror",
  "toml",
+]
+
+[[package]]
+name = "configinator-jni"
+version = "0.1.0"
+dependencies = [
+ "configinator",
+ "jni",
 ]
 
 [[package]]
