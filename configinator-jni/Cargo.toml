@@ -9,3 +9,4 @@ crate_type = ["cdylib"]
 [dependencies]
 configinator = { path = "../configinator/" }
 jni = "0.19.0"
+thiserror = "1.0.30"

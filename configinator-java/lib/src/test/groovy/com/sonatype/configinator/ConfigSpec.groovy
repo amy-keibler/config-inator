@@ -16,8 +16,19 @@ class ConfigSpec extends Specification {
         def subject = Config.loadFromFile(path)
 
         then: 'the config is available'
-        def setup = subject.getSetup()
-        setup == /echo 'Hello, Lift'/
+        subject.getSetup() == /echo 'Hello, Lift'/
+        subject.getBuild() == 'this string totally builds something'
+        subject.getImportantRules() == ['rule A']
+        subject.getIgnoreRules() == ['rule 2']
+        subject.getIgnoreFiles() == '**/requirements.txt'
+        subject.getTools() == ['clippy']
+        subject.getDisableTools() == ['cobra']
+        subject.getCustomTools() == ['custom']
+        subject.getAllow() == ['amy']
+        subject.getJdk11()
+        subject.getAndroidVersion() == 28
+        subject.getErrorproneBugPatterns() == ['bug pattern']
+        subject.getSummaryComments()
     }
 
     def 'it should throw an exception when using the configuration after it is cleaned up'() {

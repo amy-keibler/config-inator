@@ -1,3 +1,13 @@
 setup = "echo 'Hello, Lift'"
+build = "this string totally builds something"
+importantRules = ["rule A"]
+ignoreRules = ["rule 2"]
+ignoreFiles = "**/requirements.txt"
+tools = ["clippy"]
+disableTools = ["cobra"]
+customTools = ["custom"]
 allow = ["amy"]
+jdk11 = true
+androidVersion = 28
+errorprone_bug_patterns = ["bug pattern"]
 summaryComments = true

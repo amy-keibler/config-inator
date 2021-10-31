@@ -41,6 +41,7 @@ dependencies {
 def ldPath = Path.of("${System.getProperty("user.dir")}/../target/debug/").toAbsolutePath().normalize()
 test {
     environment "LD_LIBRARY_PATH", ldPath.toString()
+    environment 'RUST_BACKTRACE', 1
 }
 
 tasks.named('test') {
