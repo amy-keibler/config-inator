@@ -14,7 +14,7 @@ const ARRAYLIST_CLASS: &'static str = "java/util/ArrayList";
 const ARRAYLIST_CONSTRUCTOR: &'static str = "()V";
 
 #[no_mangle]
-pub extern "system" fn Java_com_sonatype_configinator_Config_loadConfig(
+pub extern "system" fn Java_com_sonatype_configinator_Config_loadConfigFromFile(
     env: JNIEnv,
     _class: JClass,
     config_path: JString,
@@ -25,6 +25,36 @@ pub extern "system" fn Java_com_sonatype_configinator_Config_loadConfig(
             let config = Config::from_file::<String>(config_path.into());
             match config {
                 Ok(config) => Box::into_raw(Box::new(config)) as jlong,
+                Err(ConfigError::FileNotFound(_e)) => JObject::null().into_inner() as jlong,
+                Err(e) => {
+                    throw_exception(&env, &e);
+                    JObject::null().into_inner() as jlong
+                }
+            }
+        }
+        Err(e) => {
+            throw_exception(
+                &env,
+                &format!("Could not process the config path as a string:\n{}", e),
+            );
+            JObject::null().into_inner() as jlong
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_com_sonatype_configinator_Config_loadConfigFromFolder(
+    env: JNIEnv,
+    _class: JClass,
+    config_path: JString,
+) -> jlong {
+    let config_path = env.get_string(config_path);
+    match config_path {
+        Ok(config_path) => {
+            let config = Config::from_folder::<String>(config_path.into());
+            match config {
+                Ok(Some(config)) => Box::into_raw(Box::new(config)) as jlong,
+                Ok(None) => Box::into_raw(Box::new(Config::default())) as jlong,
                 Err(ConfigError::FileNotFound(_e)) => JObject::null().into_inner() as jlong,
                 Err(e) => {
                     throw_exception(&env, &e);

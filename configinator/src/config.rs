@@ -3,6 +3,7 @@ use std::{fs::File, io::Read, path::Path};
 use serde::{Deserialize, Deserializer};
 
 use crate::error::ConfigError;
+use crate::filesystem::locate_files;
 
 /// A implementation of the configuration detailed on the [Lift configuration reference](https://help.sonatype.com/lift/configuration-reference) page.
 #[derive(Debug, PartialEq, PartialOrd, Deserialize)]
@@ -70,6 +71,15 @@ impl Config {
             toml::from_str(&contents).map_err(Into::into)
         } else {
             Err(ConfigError::FileNotFound(path.to_path_buf()))
+        }
+    }
+
+    pub fn from_folder<P: AsRef<Path>>(path: P) -> Result<Option<Self>, ConfigError> {
+        let config_files = locate_files(&path)?;
+        if let Some(config_file) = config_files.into_iter().next() {
+            Ok(Some(Config::from_file(config_file)?))
+        } else {
+            Ok(None)
         }
     }
 }
@@ -178,5 +188,24 @@ src/test/"#,
         } else {
             panic!("Expected a FileTomlParseFailed, but got {:?}", error);
         }
+    }
+
+    #[test]
+    fn it_should_parse_a_folder() {
+        let expected = Config {
+            setup: Some(String::from("echo 'Hello, Lift'")),
+            allow: Some(vec![String::from("amy")]),
+            summary_comments: Some(true),
+            ..Default::default()
+        };
+        let actual = Config::from_folder("examples/").expect("Failed to parse example toml");
+        assert_eq!(actual, Some(expected));
+    }
+
+    #[test]
+    fn it_should_not_fail_if_there_are_no_configs() {
+        let actual =
+            Config::from_folder("examples/no_configs/").expect("Failed to parse example toml");
+        assert_eq!(actual, None);
     }
 }

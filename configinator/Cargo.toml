@@ -8,3 +8,6 @@ itertools = "0.10.1"
 serde = { version = "1.0.130", features = ["derive"] }
 thiserror = "1.0.30"
 toml = "0.5.8"
+
+[dev-dependencies]
+temp_testdir = "0.2.3"

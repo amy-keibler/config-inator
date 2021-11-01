@@ -31,6 +31,52 @@ class ConfigSpec extends Specification {
         subject.getSummaryComments()
     }
 
+    def 'it should load and use a config when searching a folder'() {
+        given: 'a path to a configuration'
+        def path = Path.of('src/test/resources/examples/')
+
+        when: 'the file is loaded'
+        def subject = Config.loadFromFolder(path)
+
+        then: 'the config is available'
+        subject.getSetup() == /echo 'Hello, Lift'/
+        subject.getBuild() == 'this string totally builds something'
+        subject.getImportantRules() == ['rule A']
+        subject.getIgnoreRules() == ['rule 2']
+        subject.getIgnoreFiles() == '**/requirements.txt'
+        subject.getTools() == ['clippy']
+        subject.getDisableTools() == ['cobra']
+        subject.getCustomTools() == ['custom']
+        subject.getAllow() == ['amy']
+        subject.getJdk11()
+        subject.getAndroidVersion() == 28
+        subject.getErrorproneBugPatterns() == ['bug pattern']
+        subject.getSummaryComments()
+    }
+
+    def 'it should load a default config when none exists'() {
+        given: 'a path to a configuration'
+        def path = Path.of('src/test/resources/examples/no_configs/')
+
+        when: 'the file is loaded'
+        def subject = Config.loadFromFolder(path)
+
+        then: 'the config is empty'
+        subject.getSetup() == null
+        subject.getBuild() == null
+        subject.getImportantRules() == null
+        subject.getIgnoreRules() == null
+        subject.getIgnoreFiles() == null
+        subject.getTools() == null
+        subject.getDisableTools() == null
+        subject.getCustomTools() == null
+        subject.getAllow() == null
+        subject.getJdk11() == null
+        subject.getAndroidVersion() == null
+        subject.getErrorproneBugPatterns() == null
+        subject.getSummaryComments() == null
+    }
+
     def 'it should throw an exception when using the configuration after it is cleaned up'() {
         given: 'a path to a configuration'
         def path = Path.of('src/test/resources/examples/.lift.toml')
