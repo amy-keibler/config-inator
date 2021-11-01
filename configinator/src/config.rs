@@ -37,6 +37,7 @@ pub struct Config {
     #[serde(rename = "androidVersion")]
     pub android_version: Option<u32>,
 
+    #[serde(rename = "errorproneBugPatterns")]
     pub errorprone_bug_patterns: Option<Vec<String>>,
 
     #[serde(rename = "summaryComments")]

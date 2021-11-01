@@ -9,5 +9,5 @@ customTools = ["custom"]
 allow = ["amy"]
 jdk11 = true
 androidVersion = 28
-errorprone_bug_patterns = ["bug pattern"]
+errorproneBugPatterns = ["bug pattern"]
 summaryComments = true
