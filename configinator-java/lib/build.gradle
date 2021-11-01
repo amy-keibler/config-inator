@@ -44,7 +44,18 @@ test {
     environment 'RUST_BACKTRACE', 1
 }
 
+// Build the rust workspace code to ensure the JNI library is up-to-date
+tasks.register('buildRustLibrary') {
+    doLast {
+        println 'Building debug version of "configinator_jni"'
+        exec {
+            commandLine('cargo', 'build')
+        }
+    }
+}
+
 tasks.named('test') {
+    dependsOn 'buildRustLibrary'
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
