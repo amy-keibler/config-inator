@@ -1,5 +1,5 @@
 setup = "echo 'Hello, Lift'"
-build = "this string totally builds something"
+build = "make"
 importantRules = ["rule A"]
 ignoreRules = ["rule 2"]
 ignoreFiles = "**/requirements.txt"

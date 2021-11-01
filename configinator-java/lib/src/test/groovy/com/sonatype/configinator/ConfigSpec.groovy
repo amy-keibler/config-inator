@@ -17,7 +17,7 @@ class ConfigSpec extends Specification {
 
         then: 'the config is available'
         subject.getSetup() == /echo 'Hello, Lift'/
-        subject.getBuild() == 'this string totally builds something'
+        subject.getBuild() == 'make'
         subject.getImportantRules() == ['rule A']
         subject.getIgnoreRules() == ['rule 2']
         subject.getIgnoreFiles() == '**/requirements.txt'
@@ -40,7 +40,7 @@ class ConfigSpec extends Specification {
 
         then: 'the config is available'
         subject.getSetup() == /echo 'Hello, Lift'/
-        subject.getBuild() == 'this string totally builds something'
+        subject.getBuild() == 'make'
         subject.getImportantRules() == ['rule A']
         subject.getIgnoreRules() == ['rule 2']
         subject.getIgnoreFiles() == '**/requirements.txt'
