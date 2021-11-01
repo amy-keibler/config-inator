@@ -9,7 +9,8 @@ import java.util.List;
 
 public class Config implements AutoCloseable {
 
-    private static native long loadConfig(String filePath);
+    private static native long loadConfigFromFile(String filePath);
+    private static native long loadConfigFromFolder(String filePath);
     private static native void unloadConfig(long configPointer);
     private static native String configGetSetup(long configPointer);
     private static native String configGetBuild(long configPointer);
@@ -37,7 +38,16 @@ public class Config implements AutoCloseable {
 
     public static Config loadFromFile(Path filePath) throws RuntimeException {
         var config = new Config();
-        config.configPointer = loadConfig(filePath.toString());
+        config.configPointer = loadConfigFromFile(filePath.toString());
+        if (0 == config.configPointer) {
+            throw new ConfigurationFailedToLoadException(filePath);
+        }
+        return config;
+    }
+
+    public static Config loadFromFolder(Path filePath) throws RuntimeException {
+        var config = new Config();
+        config.configPointer = loadConfigFromFolder(filePath.toString());
         if (0 == config.configPointer) {
             throw new ConfigurationFailedToLoadException(filePath);
         }
