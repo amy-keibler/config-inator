@@ -24,7 +24,7 @@ class ConfigSpec extends Specification {
         subject.getTools() == ['clippy']
         subject.getDisableTools() == ['cobra']
         subject.getCustomTools() == ['custom']
-        subject.getAllow() == ['amy']
+        subject.getAllow() == ['amy-keibler']
         subject.getJdk11()
         subject.getAndroidVersion() == 28
         subject.getErrorproneBugPatterns() == ['bug pattern']
@@ -47,7 +47,7 @@ class ConfigSpec extends Specification {
         subject.getTools() == ['clippy']
         subject.getDisableTools() == ['cobra']
         subject.getCustomTools() == ['custom']
-        subject.getAllow() == ['amy']
+        subject.getAllow() == ['amy-keibler']
         subject.getJdk11()
         subject.getAndroidVersion() == 28
         subject.getErrorproneBugPatterns() == ['bug pattern']
