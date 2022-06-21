@@ -1,0 +1,2 @@
+build = "gradle -DskipTests=true build"
+jdk11 = true
